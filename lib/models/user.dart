@@ -20,7 +20,7 @@ class User {
   User.fromJson(Map<String, dynamic> json) {
     firstName = json['firstName'];
     lastName = json['lastName'];
-    photoURL = json['photoURL'];
+    photoURL = json['photoURL'] ?? '';
     loginType = json['loginType'];
     fullName = json['fullName'];
     id = json['id'];
