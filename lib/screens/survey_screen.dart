@@ -2,6 +2,7 @@ import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:survey_app/helpers/api_helper.dart';
 import 'package:survey_app/models/response.dart';
 import 'package:survey_app/models/survey.dart';
@@ -27,7 +28,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
   bool _emailShowError = false;
   TextEditingController _emailController = TextEditingController();
 
-  String _rating = '';
+  String _rating = '1';
   String _ratingError = '';
   bool _ratingShowError = false;
   TextEditingController _ratingController = TextEditingController();
@@ -121,7 +122,21 @@ class _SurveyScreenState extends State<SurveyScreen> {
   }
 
   Widget _showRating() {
-    return Container();
+    return RatingBar.builder(
+      initialRating: double.parse(_rating),
+      minRating: 1,
+      direction: Axis.horizontal,
+      allowHalfRating: false,
+      itemCount: 5,
+      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+      itemBuilder: (context, _) => const Icon(
+        Icons.star,
+        color: Colors.amber,
+      ),
+      onRatingUpdate: (rating) {
+        _rating = rating.round().toString();
+      },
+    );
   }
 
   Widget _showTheBest() {
@@ -256,7 +271,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
     }
     
     if (_theBest.isEmpty) {
-      isValid = true;
+      isValid = false;
       _theBestShowError = true;
       _theBestError = 'Debes ingresar lo mejor del curso.';
     } else {
@@ -272,7 +287,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
     }
     
     if (_remarks.isEmpty) {
-      isValid = true;
+      isValid = false;
       _remarksShowError = true;
       _remarksError = 'Debes ingresar un comentario.';
     } else {
@@ -307,7 +322,7 @@ class _SurveyScreenState extends State<SurveyScreen> {
 
     Map<String, dynamic> request = {
       'email': _email,
-      'qualification': _rating,
+      'qualification': int.parse(_rating),
       'theBest': _theBest,
       'theWorst': _theWorst,
       'remarks': _remarks
