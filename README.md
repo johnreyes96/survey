@@ -21,3 +21,7 @@ JAVA_HOME
 ```
 C:\Program Files\Android\Jdk\microsoft_dist_openjdk_1.8.0.25
 ```
+PATH
+```
+C:\Program Files\Java\jre1.8.0_311\bin
+```
